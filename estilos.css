@@ -1,0 +1,138 @@
+:root {
+	--marron: #7a3f08e1;
+	--verde: rgb(27, 143, 52);
+	--naranja: #d3751e;
+	--gris: rgb(160, 151, 151);
+	--blanco: white;
+	--amarillo: rgb(230, 240, 96);	
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	background: var(--marron);
+	color: #1d1d1d;
+}
+
+.cabecera {
+	display:flex;
+	flex-direction: column;
+	text-align: center;
+}
+.cabecera h3 {
+	padding: 0 10px;
+}
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+/*	text-align: center; */
+
+	margin: 50px auto;
+
+}
+form input[type="date"]{
+	width: 10em;
+	background-color: var(--naranja);
+	color: var(--blanco);
+	border-style: none;
+	font-size: 1.5em;
+	cursor: pointer;
+	margin-bottom: 0.5em;
+}
+form input[type="date"]:focus{
+	outline: none;
+}
+form input[type="submit"]{
+	width: 7.5em;
+	background-color: var(--naranja);
+	color: var(--blanco);
+	border-style: initial;
+	font-size: 2em;
+	border-radius: 10%;
+	margin-top: 2px;
+}
+form input[type="submit"]:hover{
+	cursor: pointer;
+	background-color: var(--verde);
+}
+form #sellimit{
+	width: 10em;
+	cursor: pointer;
+	background-color: var(--naranja);
+	color: var(--blanco);
+	border-style: initial;
+	font-size: 1.5em;
+	margin-bottom: 0.5em;
+}
+h2 {
+	text-align: center;
+	color: var(--blanco);
+}
+
+.list-container{
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+
+}
+.itempreciohora{
+	background-color: var(--amarillo);
+	display: inline-block;
+	justify-content: center;
+	align-items: center;
+	/* text-align: center;  */
+	vertical-align: middle; 
+	width: 250px;
+	height: 30px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	/* padding: 5px; */
+	border-radius: 5px;
+	font-size: 1.1em;
+	font-weight: 500;
+}
+.itempreciohora img{
+	width: 40px;
+	height: 10px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+.itempreciohora span{
+	width: 200px;
+	height: 10px;
+	margin-right: 10px;
+}
+
+
+/*
+
+
+.itempreciohora {
+	display: flex;
+	text-align: center;
+}
+.lista {
+	display: flex;
+	text-align: center;
+}
+
+.precio-hora {
+	font-size: 16px;
+	font-weight: 600;
+	padding: 5px;
+	background-color:cadetblue ;
+}
+#userInput {
+	background-color: antiquewhite;
+}
+
+ */
