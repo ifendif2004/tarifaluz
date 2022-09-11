@@ -5,9 +5,6 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-		integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
 	<link rel="stylesheet" href="estilos.css">
 	<title>Tarifa luz</title>
 </head>
@@ -15,8 +12,8 @@
 <body>
 	<div class="contenedor">
 		<div class="cabecera">
-			<h1>Precio de la luz por horas</h1>
-			<h3>Elige tu tarifa y el día que desees consultar:</h3>
+			<h2>PRECIO DEL KWH DE LUZ POR HORAS</h1>
+				<h3>Elige tarifa y día:</h3>
 		</div>
 		<form action="#" id="userInput">
 			<select name="geo-limit" id="sellimit">
@@ -27,19 +24,22 @@
 				<option value="melilla">Melilla
 			</select>
 			<input type="date" value="2022-09-04" />
-			<input type="submit" value="Calcular" id="btnCalcular"></input>
+			<input type="submit" value="Consultar" id="btnConsultar"></input>
 		</form>
-		<h2>PRECIO DEL KWH DE LUZ POR HORAS</h2>
 		<hr>
+
+		<div class="cabecerapreciohora">
+			PRECIO DEL KWH DE LUZ POR HORAS
+		</div>
+
 		<div id="lista" class="list-container">
-<!-- 			<div class="itempreciohora">
-				<img src="./img/rojo.png" alt="">
-				hora -- precio kWh
-			</div>
- -->		</div>
+			<!-- <div class="itempreciohora">
+				<img src="./img/rojo.png">
+				<p>23:00 -- 0.37899 €/kWh</p> 
+			</div> -->
+		</div>
 
 	</div>
-
 
 	<script src="./app.js"></script>
 </body>

@@ -1,30 +1,25 @@
 var dateControl = document.querySelector('input[type="date"]')
 var geolimit = document.getElementById('sellimit')
 var lista = document.getElementById('lista')
-var btnCalcular = document.getElementById('btnCalcular')
+var btnConsultar = document.getElementById('btnConsultar')
 
+var fecha = new Date();
+dateControl.value=fecha.toJSON().slice(0,10);
 
-btnCalcular.addEventListener("click", (event)=>{
+btnConsultar.addEventListener("click", (event) => {
 	event.preventDefault();
 	// console.log('click boton xxx');
 	// console.log(dateControl.value);
-	const startdate = dateControl.value + "T00:00"
-	const enddate = dateControl.value + "T23:59"
+	const startdate = dateControl.value + "T00:00";
+	const enddate = dateControl.value + "T23:59";
 	cargarPrecios(startdate, enddate);
-})
+});
 
-/* userInput.addEventListener('submit', (event) => {
-	event.preventDefault();
-	console.log('click boton');
-	console.log(dateControl.value);
-	const startdate = dateControl.value + "T00:00"
-	const enddate = dateControl.value + "T23:59"
-	cargarPrecios(startdate, enddate);
-}); */
 
 
 const cargarPrecios = async (startdate, enddate) => {
 	try {
+		let imagen = '';
 		lista.innerHTML = ''
 		// console.log(geolimit.value)
 		// console.log(startdate)
@@ -42,50 +37,43 @@ const cargarPrecios = async (startdate, enddate) => {
 		// Si la respuesta es correcta
 		if (respuesta.status === 200) {
 			const datos = await respuesta.json();
-			// console.log(datos);
+			//  console.log(datos);
 			// console.log(datos.included[0].attributes.values[0].datetime + ": " + datos.included[0].attributes.values[0].value);
 			let preciosHora = '';
-			//			const datos1 = await datos.included[0].json();
-			//			console.log(datos.include[0].values);
-			datos.included[0].attributes.values.forEach(hora => {
-				//				console.log(hora.datetime.slice(11,16))
-				preciosHora += `
-				<div class="itempreciohora">
-				<img src="./img/verde.png">
-				<span>${hora.datetime.slice(11, 16)} -- ${(hora.value / 1000).toFixed(5)} kWh</span>
-				
-			</div>
-						
+//			const datos1 = await datos.included[0].json();
+			// console.log(datos.included[0].attributes.values);
+datos.included[0].attributes.values.forEach(hora => {
+	//				console.log(hora.datetime.slice(11,16))
+	let valor = (hora.value / 1000).toFixed(5);
+	if (valor > 0.18) {
+		imagen = './img/rojo.png'
+	} else {
+		imagen = './img/verde.png'
+	}
+	preciosHora += `
+			<div class="itempreciohora">
+				<img src="${imagen}">
+				<span> ${hora.datetime.slice(11, 16)} -- ${(hora.value / 1000).toFixed(5)} €/kWh </span>
+			</div>`;
+});
 
-				`;
-
-				/* 				preciosHora += `
-									<div class="precio-hora">
-									<p> ==== </p>
-										<p>${hora.datetime.slice(11,16)} -- ${(hora.value / 1000).toFixed(5)} kWh</p>
-									</div>
-								`; */
-
-
-			});
-
-			document.getElementById('lista').innerHTML = preciosHora;
+document.getElementById('lista').innerHTML = preciosHora;
 
 		} else if (respuesta.status === 401) {
-			console.log('Pusiste la llave mal');
-		} else if (respuesta.status === 404) {
-			console.log('Precios no encontrados');
-		} else if (respuesta.status === 502) {
-			lista.innerHTML = 'No hay datos para los filtros seleccionados.'
-			console.log('No hay datos para los filtros seleccionados.');
-		} else {
+	console.log('Pusiste la llave mal');
+} else if (respuesta.status === 404) {
+	console.log('Precios no encontrados');
+} else if (respuesta.status === 502) {
+	lista.innerHTML = 'No hay datos para los filtros seleccionados.'
+	console.log('No hay datos para los filtros seleccionados.');
+} else {
 
-			console.log('Hubo un error y no sabemos que paso');
-		}
+	console.log('Hubo un error y no sabemos que paso');
+}
 
 	} catch (error) {
-		console.log(error);
-	}
+	console.log(error);
+}
 
 }
 
