@@ -6,6 +6,15 @@ var btnConsultar = document.getElementById('btnConsultar')
 var fecha = new Date();
 dateControl.value=fecha.toJSON().slice(0,10);
 
+geolimit.addEventListener("click", (event) => {
+	event.preventDefault();
+	lista.innerHTML = '';
+});
+dateControl.addEventListener("click", (event) => {
+	event.preventDefault();
+	lista.innerHTML = '';
+});
+
 btnConsultar.addEventListener("click", (event) => {
 	event.preventDefault();
 	// console.log('click boton xxx');
