@@ -1,12 +1,12 @@
 :root {
-	--marron: #ad7744e1;
-	--verde: rgb(68, 143, 84);
+	--marron: #b68354e1;
+	--verde: rgb(96, 151, 108);
 	--naranja: #d47d2c;
 	--gris: #808080;
 	--blanco: white;
 	--amarillo: rgb(230, 240, 96);
 	--rojo: #800000;
-	--azul: #52aeeb;
+	--azul: #99d0f5;
 	--negro: rgb(0, 0, 0);
 	--azulverde: rgb(89, 238, 176);
 }
@@ -76,15 +76,17 @@ form input[type="submit"] {
 	cursor: pointer;
 }
 
-.cabecerapreciohora {
+.cabecerapreciohora, hr {
 	background-color: var(--verde);
+	width: 350px;
 	margin: 0 auto;
 	margin-bottom: 3px;
 }
 
 .list-container {
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
+	/* flex-wrap: wrap; */
 	justify-content: center;
 	align-items: center;
 	margin: 0 auto;
@@ -92,7 +94,7 @@ form input[type="submit"] {
 
 .itempreciohora {
 	display: inline-block;
-	background-color: var(--azulverde);
+	background-color: var(--azul);
 	width: 250px;
 	height: 23px;
 	border-radius: 5px;
