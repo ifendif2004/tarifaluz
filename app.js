@@ -27,6 +27,7 @@ btnConsultar.addEventListener("click", (event) => {
 
 const cargarPrecios = async (startdate, enddate) => {
 	try {
+		mostrarLoading();
 		let imagen = '';
 		lista.innerHTML = ''
 		// console.log(geolimit.value)
@@ -50,9 +51,14 @@ const cargarPrecios = async (startdate, enddate) => {
 				precios.push((precio.value / 1000).toFixed(5));
 			});
 			// console.log(precios)
-			let minimo = Math.min(...precios) + 0.02;
-			let maximo = minimo + 0.04;
-			// console.log(minimo)
+			let minimo = Math.min(...precios);
+			let maximo = Math.max(...precios);
+			let medio = (minimo + maximo) / 2;
+			let cuarto = (medio + minimo) / 2;
+			 console.log(minimo)
+			 console.log(maximo)
+			 console.log(medio)
+			 console.log (cuarto)
 
 			//  console.log(datos);
 			// console.log(datos.included[0].attributes.values[0].datetime + ": " + datos.included[0].attributes.values[0].value);
@@ -66,9 +72,9 @@ const cargarPrecios = async (startdate, enddate) => {
 			datos.included[0].attributes.values.forEach(hora => {
 				//				console.log(hora.datetime.slice(11,16))
 				let valor = (hora.value / 1000).toFixed(5);
-				if (valor <= minimo) {
+				if (valor < cuarto) {
 					imagen = './img/verde.png'
-				} else if (valor <= maximo) {
+				} else if (valor < medio) {
 					imagen = './img/naranja.png'
 				} else {
 					imagen = './img/rojo.png'
@@ -80,24 +86,36 @@ const cargarPrecios = async (startdate, enddate) => {
 			</div>`;
 			});
 
+			ocultarLoading();
 			document.getElementById('lista').innerHTML = preciosHora;
 
 		} else if (respuesta.status === 401) {
-			console.log('Pusiste la llave mal');
+			lista.innerHTML = 'Precios no encontrados';
+			// console.log('Precios no encontrados');
 		} else if (respuesta.status === 404) {
-			console.log('Precios no encontrados');
+			ocultarLoading();
+			lista.innerHTML = 'Precios no encontrados';
+			// console.log('Precios no encontrados');
 		} else if (respuesta.status === 502) {
+			ocultarLoading();
 			lista.innerHTML = 'No hay datos para los filtros seleccionados.'
-			console.log('No hay datos para los filtros seleccionados.');
+			// console.log('No hay datos para los filtros seleccionados.');
 		} else {
-
-			console.log('Hubo un error y no sabemos que paso');
+			ocultarLoading();
+			lista.innerHTML = 'Hubo un error y no sabemos que paso';
+			// console.log('Hubo un error y no sabemos que paso');
 		}
 
 	} catch (error) {
 		console.log(error);
 	}
 
+}
+function ocultarLoading() {
+	document.getElementById("loading").style.display = "none";
+}
+function mostrarLoading() {
+	document.getElementById("loading").style.display = "block";
 }
 
 //cargarPrecios();

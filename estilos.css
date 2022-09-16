@@ -1,5 +1,5 @@
 :root {
-	--marron: #b68354e1;
+	--marron: #c5a689e1;
 	--verde: rgb(96, 151, 108);
 	--naranja: #d47d2c;
 	--gris: #808080;
@@ -8,7 +8,7 @@
 	--rojo: #800000;
 	--azul: #99d0f5;
 	--negro: rgb(0, 0, 0);
-	--azulverde: rgb(89, 238, 176);
+	--azulverde: rgb(135, 215, 221);
 }
 
 * {
@@ -108,7 +108,11 @@ form input[type="submit"] {
 	margin-left: 2px;
 	margin-right: 5px;
 }
+#loading{
+	display: none;
+	margin: 0 auto;
 
+}
 
 /* media querys */
 /* @media(max-width: 650px) {
