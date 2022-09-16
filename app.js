@@ -55,10 +55,10 @@ const cargarPrecios = async (startdate, enddate) => {
 			let maximo = Math.max(...precios);
 			let medio = (minimo + maximo) / 2;
 			let cuarto = (medio + minimo) / 2;
-			 console.log(minimo)
-			 console.log(maximo)
-			 console.log(medio)
-			 console.log (cuarto)
+			//  console.log(minimo)
+			//  console.log(maximo)
+			//  console.log(medio)
+			//  console.log (cuarto)
 
 			//  console.log(datos);
 			// console.log(datos.included[0].attributes.values[0].datetime + ": " + datos.included[0].attributes.values[0].value);
@@ -77,7 +77,7 @@ const cargarPrecios = async (startdate, enddate) => {
 				} else if (valor < medio) {
 					imagen = './img/naranja.png'
 				} else {
-					imagen = './img/rojo.png'
+					imagen = './img/puntorojo.png'
 				}
 				preciosHora += `
 			<div class="itempreciohora">
@@ -117,5 +117,3 @@ function ocultarLoading() {
 function mostrarLoading() {
 	document.getElementById("loading").style.display = "block";
 }
-
-//cargarPrecios();
