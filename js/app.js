@@ -3,7 +3,18 @@ var geolimit = document.getElementById('sellimit')
 var lista = document.getElementById('lista')
 var btnConsultar = document.getElementById('btnConsultar')
 
-var fecha = new Date();
+// --Registrar el Service Worker--
+const swLocation = "swtarifaluz.js";
+if (navigator.serviceWorker) {
+	if (window.location.href.includes("localhost")) swLocation = "/swtarifaluz.js"; 
+	//Varia según el host
+	navigator.serviceWorker.register(swLocation);
+}else{
+	console.log("no se ha podido registrar el SW " + navigator.serviceWorker)
+}
+
+
+const fecha = new Date();
 dateControl.value = fecha.toJSON().slice(0, 10);
 
 geolimit.addEventListener("click", (event) => {
