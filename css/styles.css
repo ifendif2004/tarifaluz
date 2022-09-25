@@ -5,7 +5,7 @@
 	--azulverde: rgb(135, 215, 221);
 	--negro: rgb(0, 0, 0);
 	--verde: rgb(7, 104, 28);
-	--naranja: #d47d2c;
+	--naranja: #75563a;
 	--rojo: #800000;
 }
 
@@ -121,7 +121,7 @@ form input[type="date"] {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 70%;
+	width: 75%;
 	margin: 0 auto;
 }
 
@@ -130,7 +130,7 @@ form input[type="date"] {
 	justify-content: space-evenly;
 	align-items: center;
 	width: 100%;
-	max-width: 70%;
+	max-width: 80%;
 	padding-top: 3px;
 	padding-bottom: 3px;
 	border-radius: 5px;
@@ -141,6 +141,7 @@ form input[type="date"] {
 .itempreciohora img {
 	width: 100%;
 	max-width: 5%;
+	margin-right: 0.1em;
 }
 
 .itempreciohora span {
