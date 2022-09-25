@@ -1,14 +1,12 @@
 :root {
-	--marron: #c5a689e1;
-	--verde: rgb(136, 163, 142);
-	--naranja: #d47d2c;
-	--gris: #808080;
-	--blanco: white;
-	--amarillo: rgb(230, 240, 96);
-	--rojo: #800000;
-	--azul: #99d0f5;
-	--negro: rgb(0, 0, 0);
+	--fondo: #e4dec5e1;
+	--letra: #157bbe;
+	--azul:#81adca;	
 	--azulverde: rgb(135, 215, 221);
+	--negro: rgb(0, 0, 0);
+	--verde: rgb(7, 104, 28);
+	--naranja: #d47d2c;
+	--rojo: #800000;
 }
 
 * {
@@ -27,7 +25,7 @@
 
 body {
 	font-family: “Helvetica”, arial, sans-serif;
-	background-color: var(--marron);
+	background-color: var(--fondo);
 }
 
 .contenedor {
@@ -35,12 +33,17 @@ body {
 	width: 99%;
 }
 
+h3, h4{
+	text-align: center;
+	color: var(--letra);
+}
+
 .cabecera {
 	display: flex;
 	flex-direction: column;
 	text-align: center;
-	background-color: var(--gris);
-	width: 100%;
+	width: 70%;
+	margin: 0 auto;
 }
 
 form #sellimit {
@@ -61,7 +64,7 @@ form input[type="date"] {
 	font-size: calc(1.5vw + 1vh);
 }
 
-form input[type="submit"] {
+#btnConsultar {
 	width: 100%;
 	background-color: var(--azul);
 	color: var(--negro);
@@ -86,7 +89,7 @@ form input[type="submit"] {
 	display: flex;
 	width: 100%;
 	justify-content: space-between;
-	gap: 0.5em;
+	gap: 0.1em;
 	margin-bottom: 0.2em;
 }
 
@@ -96,23 +99,23 @@ form input[type="submit"] {
 	display: flex;
 	flex-direction: column;
 	background-color: var(--azul);
-	color: var(--negro);
 	width: 100%;
 	border-radius: 5px;
 	border-style: ridge;
 }
 
-.verde {
+.minimo {
 	color: var(--verde);
 }
 
-#medio {
+.medio {
 	color: var(--naranja);
 }
 
-#maximo {
+.maximo {
 	color: var(--rojo);
 }
+
 
 .list-container {
 	display: flex;
@@ -126,7 +129,6 @@ form input[type="submit"] {
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;
-	background-color: var(--azul);
 	width: 100%;
 	max-width: 70%;
 	padding-top: 3px;
@@ -139,8 +141,12 @@ form input[type="submit"] {
 .itempreciohora img {
 	width: 100%;
 	max-width: 5%;
-	margin-right: 3px;
 }
+
+.itempreciohora span {
+	margin-left: 0.4em;
+}
+
 
 #loading {
 	display: none;

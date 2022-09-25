@@ -11,11 +11,11 @@ const APP_SHELL = [
   "img/icon-384x384.png",
   "img/icon-512x512.png",
   "img/kwh.png",
-  "img/naranja.png",
+  "img/cuadradoNaranja.png",
   "img/puntorojo.png",
-  "img/rojo.png",
-  "img/verde.png",
-  "favicon.ico"
+  "img/cuadradoVerde.png",
+  "favicon.ico",
+  "swtarifaluz.js"
 ];
 
 self.addEventListener("install", (e) => {
