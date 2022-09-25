@@ -71,8 +71,8 @@ form input[type="date"] {
 	border-style: outset;
 	font-size: calc(2.5vw + 1vh);
 	font-weight: bolder;
-	border-radius: 5%;
-	margin-bottom: 0.15em;
+	border-radius: 2em / 5em;
+	margin-bottom: 0.3em;
 	cursor: pointer;
 }
 
@@ -147,6 +147,9 @@ form input[type="date"] {
 .itempreciohora span {
 	margin-left: 0.4em;
 }
+.itempreciohora span1 {
+	font-size: calc(1vw + 1vh + 0.5vmin);
+}
 
 
 #loading {
@@ -156,13 +159,15 @@ form input[type="date"] {
 }
 
 /* --------- Media Querys -----------*/
-/* @media(max-width: 650px) {
-	h3 {
-		font-size: 1.5em;
+@media screen and (min-width: 480px) {
+	/* body {
+	  background-color: lightgreen;
+	} */
+	.container {
+		width: 75%;
+		margin: 0 auto;
 	}
-
-	h2 {
-		font-size: 1.5em;
+	.itempreciohora img {
+		max-width: 3%;
 	}
-
-} */
+  }
