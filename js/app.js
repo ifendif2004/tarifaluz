@@ -46,6 +46,9 @@ const cargarPrecios = async (startdate, enddate) => {
 
 		const apirest = `https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-real?start_date=${startdate}&end_date=${enddate}&geo_limit=${geolimit.value}&time_trunc=hour`
 		const respuesta = await fetch(apirest);
+		ocultarLoading();
+		btnConsultar.removeAttribute('disabled')
+		btnConsultar.removeAttribute('aria-busy')
 		if (respuesta.status === 200) {
 			const datos = await respuesta.json();
 			let precios = [];
@@ -57,10 +60,6 @@ const cargarPrecios = async (startdate, enddate) => {
 			let med = (min + max) / 2;
 			med = (Math.round(med * 1000000) / 1000000).toPrecision(5)
 			let cuarto = (+med + min) / 2;
-			console.log(min)
-			console.log(max)
-			console.log(med)
-			console.log(cuarto)
 			let minimoMaximo = `
 			<div id="minimo" class="minimo"><p>MÍNIMO</p> <p>${min} €/kwh</p></div>
 			<div id="medio" class="medio"><p>MEDIA</p> <p>${med} €/kwh</p></div>
@@ -93,9 +92,6 @@ const cargarPrecios = async (startdate, enddate) => {
 				</div>`;
 			});
 
-			ocultarLoading();
-			btnConsultar.removeAttribute('disabled')
-			btnConsultar.removeAttribute('aria-busy')
 			document.getElementById('lista').innerHTML = preciosHora;
 
 		} else if (respuesta.status === 401) {
