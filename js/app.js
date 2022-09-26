@@ -5,14 +5,14 @@ var btnConsultar = document.getElementById('btnConsultar')
 var maxmin = document.getElementById('maxmin')
 
 // -----------Registrar el Service Worker------------------
-// const swLocation = "swtarifaluz.js";
-// if (navigator.serviceWorker) {
-// 	if (window.location.href.includes("localhost")) swLocation = "/swtarifaluz.js";
-// 	//Varia según el host
-// 	navigator.serviceWorker.register(swLocation);
-// } else {
-// 	console.log("no se ha podido registrar el SW " + navigator.serviceWorker)
-// }
+let swLocation = "swtarifaluz.js";
+if (navigator.serviceWorker) {
+	if (window.location.href.includes("localhost")) swLocation = "/swtarifaluz.js";
+	//Varia según el host
+	navigator.serviceWorker.register(swLocation);
+} else {
+	console.log("no se ha podido registrar el SW " + navigator.serviceWorker)
+}
 
 
 const fecha = new Date();
@@ -55,6 +55,8 @@ const cargarPrecios = async (startdate, enddate) => {
 			datos.included[0].attributes.values.forEach(precio => {
 				precios.push((precio.value / 1000).toFixed(5));
 			});
+			console.log(datos.included[0].attributes.percentage)
+			
 			let min = Math.min(...precios);
 			let max = Math.max(...precios);
 			let med = (min + max) / 2;
