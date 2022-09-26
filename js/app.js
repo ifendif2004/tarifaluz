@@ -55,8 +55,6 @@ const cargarPrecios = async (startdate, enddate) => {
 			datos.included[0].attributes.values.forEach(precio => {
 				precios.push((precio.value / 1000).toFixed(5));
 			});
-			console.log(datos.included[0].attributes.percentage)
-			
 			let min = Math.min(...precios);
 			let max = Math.max(...precios);
 			let med = (min + max) / 2;
