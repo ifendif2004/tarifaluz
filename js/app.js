@@ -1,8 +1,8 @@
-var dateControl = document.querySelector('input[type="date"]')
-var geolimit = document.getElementById('sellimit')
-var lista = document.getElementById('lista')
-var btnConsultar = document.getElementById('btnConsultar')
-var maxmin = document.getElementById('maxmin')
+const dateControl = document.querySelector('input[type="date"]')
+const geolimit = document.getElementById('sellimit')
+const lista = document.getElementById('lista')
+const btnConsultar = document.getElementById('btnConsultar')
+const maxmin = document.getElementById('maxmin')
 
 // -----------Registrar el Service Worker------------------
 let swLocation = "swtarifaluz.js";

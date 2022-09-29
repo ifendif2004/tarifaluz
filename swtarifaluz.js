@@ -3,6 +3,9 @@ const STATIC_CACHE = "static-kwh";
 const APP_SHELL = [
   "/",
   "index.html",
+  "favicon.ico",
+  "swtarifaluz.js",
+  "manifest.json",
   "css/styles.css",
   "js/app.js",
   "img/bola.gif",
@@ -13,9 +16,7 @@ const APP_SHELL = [
   "img/kwh.png",
   "img/cuadradoNaranja.png",
   "img/puntorojo.png",
-  "img/cuadradoVerde.png",
-  "favicon.ico",
-  "swtarifaluz.js"
+  "img/cuadradoVerde.png"
 ];
 
 self.addEventListener("install", (e) => {
@@ -27,7 +28,7 @@ self.addEventListener("install", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  console.log("fetch! ", e.request);
+  // console.log("fetch! ", e.request);
   e.respondWith(
     caches
       .match(e.request)
