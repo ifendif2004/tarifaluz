@@ -4,7 +4,7 @@
     "orientation": "portrait",
     "display": "standalone",
     "scope": "/",
-    "start_url": "http://127.0.0.1:5500/index.html",
+    "start_url": "https://ifendif2004.github.io/tarifaluz/",
     "name": "Precios kwh de luz",
     "short_name": "\u20ac/kwh",
     "description": "Precios kwh de luz",
