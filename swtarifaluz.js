@@ -1,17 +1,12 @@
 const STATIC_CACHE = "static-kwh";
 
 const APP_SHELL = [
-  "/",
-  "index.html",
-  "favicon.ico",
-  "css/styles.css",
-  "js/app.js",
-  "img/bola.gif",
-  "img/kwh.png",
-  "img/cuadradoNaranja.png",
-  "img/puntorojo.png",
-  "img/cuadradoVerde.png"
-];
+  "./",
+  "./index.html",
+  "./css/styles.css",
+  "./js/app.js",
+  "./img/bola.gif"
+ ];
 
 self.addEventListener("install", (e) => {
   const cacheStatic = caches
