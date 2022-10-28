@@ -6,7 +6,7 @@ const APP_SHELL = [
   "./css/styles.css",
   "./js/app.js",
   "./img/bola.gif",
-  "./img/kwh.gif",
+  "./img/kwh.png",
   "./img/cuadradoNaranja.png",
   "./img/cuadradoVerde.png",
   "./img/puntorojo.png"
