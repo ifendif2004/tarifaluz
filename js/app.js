@@ -5,10 +5,8 @@ const btnConsultar = document.getElementById('btnConsultar')
 const maxmin = document.getElementById('maxmin')
 
 // -----------Registrar el Service Worker------------------
-let swLocation = "swtarifaluz.js";
+let swLocation = "./swtarifaluz.js";
 if (navigator.serviceWorker) {
-	if (window.location.href.includes("localhost")) swLocation = "/swtarifaluz.js";
-	//Varia según el host
 	navigator.serviceWorker.register(swLocation);
 } else {
 	console.log("no se ha podido registrar el SW " + navigator.serviceWorker)
@@ -109,6 +107,7 @@ const cargarPrecios = async (startdate, enddate) => {
 		}
 
 	} catch (error) {
+		ocultarLoading();
 		lista.innerHTML = 'Hubo un error y no sabemos que paso';
 		console.log(error);
 	}

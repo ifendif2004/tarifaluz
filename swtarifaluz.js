@@ -5,7 +5,11 @@ const APP_SHELL = [
   "./index.html",
   "./css/styles.css",
   "./js/app.js",
-  "./img/bola.gif"
+  "./img/bola.gif",
+  "./img/kwh.gif",
+  "./img/cuadradoNaranja.png",
+  "./img/cuadradoVerde.png",
+  "./img/puntorojo.png"
  ];
 
 self.addEventListener("install", (e) => {
