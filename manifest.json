@@ -3,7 +3,7 @@
     "background_color": "#21daf3",
     "orientation": "portrait",
     "display": "standalone",
-    "scope": "/",
+    "scope": "https://ifendif2004.github.io/tarifaluz/",
     "start_url": "https://ifendif2004.github.io/tarifaluz/",
     "name": "Precios kwh de luz",
     "short_name": "\u20ac/kwh",
