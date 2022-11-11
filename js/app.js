@@ -55,7 +55,8 @@ const cargarPrecios = async (startdate, enddate) => {
 			});
 			let min = Math.min(...precios);
 			let max = Math.max(...precios);
-			let med = (min + max) / 2;
+			let med = precios.reduce((a,b) => a + parseFloat(b,10), 0)
+			med = med / 24;
 			med = (Math.round(med * 1000000) / 1000000).toPrecision(5)
 			let cuarto = (+med + min) / 2;
 			let minimoMaximo = `
