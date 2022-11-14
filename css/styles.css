@@ -87,7 +87,7 @@ form #sellimit {
 	justify-content: space-between;
 	gap: 0.1em;
 	margin-bottom: 0.2em;
-	font-size: calc(1vw + 0.7vh + 0.5vmin);
+	font-size: calc(1vw + 1vh + 0.5vmin);
 }
 
 #minimo,
