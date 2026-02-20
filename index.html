@@ -1,57 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="theme-color" content="#75563a"/>
-	<meta name="description" content="Precio de la luz por horas.">
+	<meta name="theme-color" content="#6366f1" />
+	<meta name="description" content="Precio de la luz por horas en España.">
 	<link rel="stylesheet" href="./css/styles.css">
 	<link rel="manifest" href="./manifest.json">
-	<link rel="apple-touch-icon" href="./img/kwh.png">	
-	<title>Tarifa luz</title>
+	<link rel="apple-touch-icon" href="./img/kwh.png">
+	<title>Tarifa Luz - Precio KWh hoy</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
-	<div class="container">
-		<h3>PRECIO DEL KWH DE LUZ POR HORAS</h3>
-		<h4>Elige tarifa y día:</h4>
-		<div class="cabecera">
-			<form action="#" id="userInput">
-				<div class="datosusuario">
-					<select name="geo-limit" id="sellimit">
-						<option value="peninsular" selected>Peninsula
-						<option value="canarias">Canarias
-						<option value="baleares">Baleares
-						<option value="ceuta">Ceuta
-						<option value="melilla">Melilla
-					</select>
-					<input type="date" id="cbfecha" value="2022-09-04" />
+	<main class="container">
+		<header>
+			<h1>Tarifa Luz</h1>
+			<h4>Precios del kWh por horas</h4>
+		</header>
+
+		<section class="card">
+			<form id="userInput">
+				<div class="controls-grid">
+					<div class="field">
+						<label for="sellimit">Zona Geográfica</label>
+						<select name="geo-limit" id="sellimit">
+							<option value="peninsular" selected>Península</option>
+							<option value="canarias">Canarias</option>
+							<option value="baleares">Baleares</option>
+							<option value="ceuta">Ceuta</option>
+							<option value="melilla">Melilla</option>
+						</select>
+					</div>
+					<div class="field">
+						<label for="cbfecha">Fecha</label>
+						<input type="date" id="cbfecha" />
+					</div>
 				</div>
 				<button type="submit" id="btnConsultar">
-					Consultar
+					Consultar Precios
 				</button>
 			</form>
-		</div>
+		</section>
 
-		<div class="resultado">
+		<section id="resultado" class="resultado-grid">
+			<div class="main-content">
+				<div id="maxmin">
+					<!-- Dynamically populated stats cards -->
+				</div>
 
-			<div id="maxmin">
-				<!-- <div id="minimo"></div>
-				<div id="medio"></div>
-				<div id="maximo"></div> -->
+				<div class="card chart-card">
+					<div class="chart-container">
+						<canvas id="priceChart"></canvas>
+					</div>
+				</div>
 			</div>
 
-			<div id="lista" class="list-container">
-				<!-- <div class="itempreciohora">
-					<img src="./img/rojo.png">
-					<p>23:00 -- 0.37899 €/kWh</p> 
-				</div> -->
-			</div>
-			<img src="./img/bola.gif" id="loading" />
-		</div>
-	</div>
+			<aside class="side-content">
+				<div id="lista" class="list-container">
+					<!-- Dynamically populated price list -->
+				</div>
+			</aside>
+
+			<img src="./img/bola.gif" id="loading" alt="Cargando..." />
+		</section>
+
+		<footer>
+			<p>Datos proporcionados por REE (Red Eléctrica de España)</p>
+		</footer>
+	</main>
 
 	<script src="./js/app.js"></script>
 </body>

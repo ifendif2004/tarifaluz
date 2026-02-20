@@ -1,122 +1,188 @@
-const dateControl = document.querySelector('input[type="date"]')
-const geolimit = document.getElementById('sellimit')
-const lista = document.getElementById('lista')
-const btnConsultar = document.getElementById('btnConsultar')
-const maxmin = document.getElementById('maxmin')
+// Elements
+const dateControl = document.querySelector('#cbfecha');
+const geolimit = document.getElementById('sellimit');
+const lista = document.getElementById('lista');
+const btnConsultar = document.getElementById('btnConsultar');
+const maxmin = document.getElementById('maxmin');
+const loading = document.getElementById('loading');
+let priceChart = null;
 
-// -----------Registrar el Service Worker------------------
-let swLocation = "./swtarifaluz.js";
-if (navigator.serviceWorker) {
-	navigator.serviceWorker.register(swLocation);
-} else {
-	console.log("no se ha podido registrar el SW " + navigator.serviceWorker)
+// ----------- Registrar el Service Worker ------------------
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./swtarifaluz.js')
+            .then(reg => console.log('Service Worker registrado', reg))
+            .catch(err => console.error('Error al registrar SW', err));
+    });
 }
 
+// Inicialización de fecha
+const setInitialDate = () => {
+    const hoy = new Date();
+    dateControl.value = hoy.toISOString().split('T')[0];
+};
 
-const fecha = new Date();
-dateControl.value = fecha.toJSON().slice(0, 10);
+setInitialDate();
 
-geolimit.addEventListener("click", (event) => {
-	event.preventDefault();
-	lista.innerHTML = '';
-	maxmin.innerHTML = '';
-});
-dateControl.addEventListener("click", (event) => {
-	lista.innerHTML = '';
-	maxmin.innerHTML = '';
-});
+// Listeners
+const clearResults = () => {
+    lista.innerHTML = '';
+    maxmin.innerHTML = '';
+    if (priceChart) {
+        priceChart.destroy();
+        priceChart = null;
+    }
+};
+
+geolimit.addEventListener("change", clearResults);
+dateControl.addEventListener("change", clearResults);
 
 btnConsultar.addEventListener("click", (event) => {
-	event.preventDefault();
-	const startdate = dateControl.value + "T00:00";
-	const enddate = dateControl.value + "T23:59";
-	cargarPrecios(startdate, enddate);
+    event.preventDefault();
+    const fecha = dateControl.value;
+    if (!fecha) return;
+
+    const startdate = `${fecha}T00:00`;
+    const enddate = `${fecha}T23:59`;
+    cargarPrecios(startdate, enddate);
 });
 
-
+// Lógica de carga
 const cargarPrecios = async (startdate, enddate) => {
-	try {
-		btnConsultar.setAttribute("disabled", "")
-		btnConsultar.setAttribute("aria-busy", "true")
-		mostrarLoading();
-		let imagen = '';
-		lista.innerHTML = ''
+    try {
+        setLoadingState(true);
+        clearResults();
 
-		const apirest = `https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-real?start_date=${startdate}&end_date=${enddate}&geo_limit=${geolimit.value}&time_trunc=hour`
-		const respuesta = await fetch(apirest);
-		ocultarLoading();
-		btnConsultar.removeAttribute('disabled')
-		btnConsultar.removeAttribute('aria-busy')
-		if (respuesta.status === 200) {
-			const datos = await respuesta.json();
-			let precios = [];
-			datos.included[0].attributes.values.forEach(precio => {
-				precios.push((precio.value / 1000).toFixed(5));
-			});
-			let min = Math.min(...precios);
-			let max = Math.max(...precios);
-			let med = precios.reduce((a,b) => a + parseFloat(b,10), 0)
-			med = med / 24;
-			med = (Math.round(med * 1000000) / 1000000).toPrecision(5)
-			let cuarto = (+med + min) / 2;
-			let minimoMaximo = `
-			<div id="minimo" class="minimo"><p>MÍNIMO</p> <p>${min} €/kwh</p></div>
-			<div id="medio" class="medio"><p>MEDIA</p> <p>${med} €/kwh</p></div>
-			<div id="maximo" class="maximo"><p>MÁXIMO</p> <p>${max} €/kwh</p></div>`;
-			maxmin.innerHTML = minimoMaximo;
-			let preciosHora = '';
-			let colorhora = ''
-			let horanext = ''
-			datos.included[0].attributes.values.forEach(hora => {
-				let valor = (hora.value / 1000).toFixed(5);
-				if (valor < cuarto) {
-					colorhora = 'minimo'
-					imagen = './img/cuadradoVerde.png'
-				} else if (valor < med) {
-					colorhora = 'medio'
-					imagen = './img/cuadradoNaranja.png'
-				} else {
-					colorhora = 'maximo'
-					imagen = './img/puntorojo.png'
-				}
-				horanext = +hora.datetime.slice(11, 13) + 1
-				if ((String(horanext).length) == 1) {
-					horanext = '0' + horanext
-				}
+        const url = `https://apidatos.ree.es/es/datos/mercados/precios-mercados-tiempo-real?start_date=${startdate}&end_date=${enddate}&geo_limit=${geolimit.value}&time_trunc=hour`;
 
-				preciosHora += `
-				<div class="itempreciohora">
-					<img src="${imagen}">
-					<span1> ${hora.datetime.slice(11, 13)}h-${horanext}h: <span class="${colorhora}">  ${(hora.value / 1000).toFixed(5)} €/kWh </span></span1>
-				</div>`;
-			});
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-			document.getElementById('lista').innerHTML = preciosHora;
+        const data = await response.json();
+        const values = data.included[0].attributes.values;
 
-		} else if (respuesta.status === 401) {
-			ocultarLoading();
-			lista.innerHTML = 'Precios no encontrados';
-		} else if (respuesta.status === 404) {
-			ocultarLoading();
-			lista.innerHTML = 'Precios no encontrados';
-		} else if (respuesta.status === 502) {
-			ocultarLoading();
-			lista.innerHTML = 'No hay datos para los filtros seleccionados.'
-		} else {
-			ocultarLoading();
-			lista.innerHTML = 'Hubo un error y no sabemos que paso';
-		}
+        if (!values || values.length === 0) {
+            lista.innerHTML = '<p class="error">No se encontraron datos para esta fecha o zona.</p>';
+            return;
+        }
 
-	} catch (error) {
-		ocultarLoading();
-		lista.innerHTML = 'Hubo un error y no sabemos que paso';
-		console.log(error);
-	}
+        renderResults(values);
 
-}
-function ocultarLoading() {
-	document.getElementById("loading").style.display = "none";
-}
-function mostrarLoading() {
-	document.getElementById("loading").style.display = "block";
-}
+    } catch (error) {
+        console.error("Error cargando precios:", error);
+        lista.innerHTML = `<p class="error">Error: ${error.message}. Por favor, reintenta más tarde.</p>`;
+    } finally {
+        setLoadingState(false);
+    }
+};
+
+const renderResults = (values) => {
+    const prices = values.map(v => v.value / 1000);
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+    const avg = prices.reduce((a, b) => a + b, 0) / prices.length;
+
+    // Calcular umbrales para colores
+    const range = max - min;
+    const lowThreshold = min + (range * 0.33);
+    const midThreshold = min + (range * 0.66);
+
+    // Renderizar Stats
+    maxmin.innerHTML = `
+        <div class="stat-card">
+            <div class="stat-label">Mínimo</div>
+            <div class="stat-value minimo">${min.toFixed(5)} <small>€</small></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Media</div>
+            <div class="stat-value medio">${avg.toFixed(5)} <small>€</small></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Máximo</div>
+            <div class="stat-value maximo">${max.toFixed(5)} <small>€</small></div>
+        </div>
+    `;
+
+    // Renderizar Lista y preparar datos para el gráfico
+    const labels = [];
+    const chartData = [];
+    let listHtml = '';
+
+    values.forEach((item, index) => {
+        const price = prices[index];
+        const hourStart = item.datetime.slice(11, 13);
+        const hourEnd = String((parseInt(hourStart) + 1) % 24).padStart(2, '0');
+        const timeLabel = `${hourStart}:00 - ${hourEnd}:00`;
+
+        let statusClass = 'maximo';
+        if (price <= lowThreshold) statusClass = 'minimo';
+        else if (price <= midThreshold) statusClass = 'medio';
+
+        labels.push(`${hourStart}h`);
+        chartData.push(price);
+
+        listHtml += `
+            <div class="itempreciohora">
+                <div class="status-dot dot-${statusClass}"></div>
+                <span class="time-label">${timeLabel}</span>
+                <span class="price-value ${statusClass}">${price.toFixed(5)} €/kWh</span>
+            </div>
+        `;
+    });
+
+    lista.innerHTML = listHtml;
+    renderChart(labels, chartData, lowThreshold, midThreshold);
+};
+
+const renderChart = (labels, data, low, mid) => {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+
+    // Colores dinámicos para las barras
+    const backgroundColors = data.map(val => {
+        if (val <= low) return '#10b981'; // Green
+        if (val <= mid) return '#f59e0b'; // Amber
+        return '#ef4444'; // Red
+    });
+
+    priceChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Precio €/kWh',
+                data: data,
+                backgroundColor: backgroundColors,
+                borderRadius: 4,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    grid: { color: 'rgba(0,0,0,0.05)' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: {
+                        autoSkip: false,
+                        maxRotation: 45,
+                        minRotation: 45,
+                        font: { size: 9 }
+                    }
+                }
+            }
+        }
+    });
+};
+
+const setLoadingState = (isLoading) => {
+    btnConsultar.disabled = isLoading;
+    loading.style.display = isLoading ? 'block' : 'none';
+};
+
